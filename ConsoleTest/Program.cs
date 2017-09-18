@@ -22,8 +22,10 @@ namespace ConsoleTest
             ExcelHelper helper = new ExcelHelper();
 
             // for test List
-            helper.Add<User>("使用注解的List", list);
+            helper.Add<User>("使用List NULL", null);
+            helper.Add("使用DataTable NULL", null);
 
+            helper.Add<User>("使用注解的List", list);
             helper.Add<User>("指定Column的List", list, new Column[] {
                 new Column("Pwd","姓名"),
                 new Column("Name","姓名",ColumnType.Default,(t, index)=> {

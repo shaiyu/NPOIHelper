@@ -131,11 +131,14 @@ namespace NPOIHelper
             {
                 this.InitDefaultColumns();
             }
-            foreach (var col in Columns)
+            if (Columns != null)
             {
-                ICell cell = row.CreateCell(i++);
-                cell.SetCellValue(col.ColTitleName);
-                cell.CellStyle = GetTitleStyle(WorkBook);
+                foreach (var col in Columns)
+                {
+                    ICell cell = row.CreateCell(i++);
+                    cell.SetCellValue(col.ColTitleName);
+                    cell.CellStyle = GetTitleStyle(WorkBook);
+                }
             }
         }
 
@@ -167,7 +170,8 @@ namespace NPOIHelper
         /// <summary>
         /// 数据填充后
         /// </summary>
-        public virtual void AfterFill() {
+        public virtual void AfterFill()
+        {
             //没有此句，则不会刷新出公式计算结果
             this.SheetThis.ForceFormulaRecalculation = true;
         }

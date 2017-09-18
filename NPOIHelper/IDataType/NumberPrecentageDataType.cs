@@ -8,6 +8,9 @@ using NPOI.SS.UserModel;
 
 namespace NPOIHelper
 {
+    /// <summary>
+    /// 百分比样式
+    /// </summary>
     public class NumberPrecentageDataType : IDataType
     {
 

@@ -8,6 +8,9 @@ using NPOI.SS.UserModel;
 
 namespace NPOIHelper
 {
+    /// <summary>
+    /// 普通数字样式
+    /// </summary>
     public class NumberDataType : IDataType
     {
         /// <summary>

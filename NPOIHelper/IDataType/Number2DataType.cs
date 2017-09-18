@@ -8,6 +8,9 @@ using NPOI.SS.UserModel;
 
 namespace NPOIHelper
 {
+    /// <summary>
+    /// 保留两位小数
+    /// </summary>
     public class Number2DataType : IDataType
     {
         /// <summary>
@@ -16,6 +19,7 @@ namespace NPOIHelper
         /// <param name="columnType"></param>
         public Number2DataType(ColumnType columnType) : base(columnType)
         {
+
         }
 
         /// <summary>

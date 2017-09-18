@@ -17,7 +17,7 @@ namespace NPOIHelper
         /// </summary>
         Number = 1,
         /// <summary>
-        /// 2 位小数 --> 未实现，采用默认数字格式
+        /// 2 位小数
         /// </summary>
         NumDecimal2 = 2,
         /// <summary>
@@ -28,6 +28,10 @@ namespace NPOIHelper
         /// 科学计数法
         /// </summary>
         NumberScientificNotation = 4,
+        /// <summary>
+        /// 0 位小数
+        /// </summary>
+        NumDecimal0 = 5,
         /// <summary>
         /// 日期格式
         /// </summary>

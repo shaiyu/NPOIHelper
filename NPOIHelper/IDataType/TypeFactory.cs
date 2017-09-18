@@ -32,12 +32,14 @@ namespace NPOIHelper
                     break;
                 case ColumnType.Number:
                     return new NumberDataType(ColumnType.Number);
+                case ColumnType.NumDecimal0:
+                    return new Number0DataType(ColumnType.NumDecimal0);
                 case ColumnType.NumDecimal2:
                     return new Number2DataType(ColumnType.NumDecimal2);
                 case ColumnType.NumberPercentage:
                     return new NumberPrecentageDataType(ColumnType.NumberPercentage);
                 case ColumnType.NumberScientificNotation:
-                    return new NumberDataType(ColumnType.NumberScientificNotation);
+                    return new NumberScientificNotationDataType(ColumnType.NumberScientificNotation);
                 case ColumnType.Date:
                     return new DateDataType(ColumnType.Date);
                 case ColumnType.DateTime:

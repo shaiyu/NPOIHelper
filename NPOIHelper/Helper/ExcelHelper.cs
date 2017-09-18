@@ -64,7 +64,8 @@ namespace NPOIHelper
         /// <param name="columns"></param>
         public void Add(string _SheetName, DataTable data, Column[] columns = null)
         {
-            int len = GetLen(data == null ? 0 : data.Rows.Count);
+            data = data == null ? new DataTable() : data;
+            int len = GetLen(data.Rows.Count);
             for (int i = 0; i < len; i++)
             {
                 var sheetName = _SheetName + (i > 0 ? i + "" : "");
@@ -82,7 +83,8 @@ namespace NPOIHelper
         /// <param name="columns"></param>
         public void Add<T>(string _SheetName, List<T> data, Column[] columns = null)
         {
-            int len = GetLen(data == null ? 0 : data.Count);
+            data = data == null ? new List<T>() : data;
+            int len = GetLen(data.Count);
             for (int i = 0; i < len; i++)
             {
                 var sheetName = _SheetName + (i > 0 ? i + "" : "");

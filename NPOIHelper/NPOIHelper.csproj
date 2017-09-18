@@ -49,6 +49,9 @@
   <ItemGroup>
     <Compile Include="IDataType\DateTimeDataType.cs" />
     <Compile Include="IDataType\Number2DataType.cs" />
+    <Compile Include="IDataType\Number0DataType.cs" />
+    <Compile Include="IDataType\NumberScientificNotationDataType.cs" />
+    <Compile Include="IDataType\NumberNDataType.cs" />
     <Compile Include="Sheets\Column.cs" />
     <Compile Include="IDataType\ColumnTypeAttribute.cs" />
     <Compile Include="IDataType\NumberDataType.cs" />
