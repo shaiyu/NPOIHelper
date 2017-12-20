@@ -27,8 +27,12 @@ namespace ConsoleTest
 
             helper.Add<User>("使用注解的List", list);
             helper.Add<User>("指定Column的List", list, new Column[] {
-                new Column("Pwd","姓名"),
-                new Column("Name","姓名",ColumnType.Default,(t, index)=> {
+                new Column("Pwd","密码"),
+                new Column("Name","姓名1",ColumnType.Default,(t, index)=> {
+                        var user = (User)t;
+                        return user.Name + "---------" + user.Pwd + "|Index:"+index;
+                }),
+                new Column("Name","姓名2",ColumnType.Default,(t)=> {
                         var user = (User)t;
                         return user.Name + "---------" + user.Pwd;
                 }),
@@ -49,7 +53,7 @@ namespace ConsoleTest
             helper.Add("使用Fun的Dt", dt, new Column[] {
                     new Column("Name","姓名",ColumnType.Default,(t, index)=> {
                         var dr = (DataRow)t;
-                        return dr["Name"]+"---------"+ dr["Pwd"];
+                        return dr["Name"]+"---------"+ dr["Pwd"] + "|Index:"+index;
                     }),
                     new Column("Age","年龄", ColumnType.NumDecimal2),
                     new Column("Age","测试公式",ColumnType.Default,(t, index)=> {

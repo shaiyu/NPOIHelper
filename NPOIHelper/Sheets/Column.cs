@@ -76,11 +76,11 @@ namespace NPOIHelper
         /// <param name="colName"></param>
         /// <param name="colTitleName"></param>
         /// <param name="colType"></param>
-        /// <param name="ColDataSourse"></param>
-        public Column(string colName, string colTitleName, ColumnType colType, Dictionary<string, string> ColDataSourse)
+        /// <param name="colDataSourse"></param>
+        public Column(string colName, string colTitleName, ColumnType colType, Dictionary<string, string> colDataSourse)
             : this(colName, colTitleName, colType)
         {
-            this.ColDataSourse = ColDataSourse;
+            this.ColDataSourse = colDataSourse;
         }
 
         /// <summary>
@@ -89,7 +89,23 @@ namespace NPOIHelper
         /// <param name="colName"></param>
         /// <param name="colTitleName"></param>
         /// <param name="colType"></param>
-        /// <param name="func">自定义转换函数</param>
+        /// <param name="func">自定义转换函数 object -> Entity</param>
+        [Obsolete]
+        public Column(string colName, string colTitleName, ColumnType colType, Func<object, string> func)
+            : this(colName, colTitleName, colType)
+        {
+            this.Func = (t, index) => {
+                return func.Invoke(t);
+            };
+        }
+
+        /// <summary>
+        /// 基本构造
+        /// </summary>
+        /// <param name="colName"></param>
+        /// <param name="colTitleName"></param>
+        /// <param name="colType"></param>
+        /// <param name="func">自定义转换函数 object -> Entity  int -> ExcelRowIndex, 加上了标题行</param>
         public Column(string colName, string colTitleName, ColumnType colType, Func<object, int, string> func)
             : this(colName, colTitleName, colType)
         {
@@ -117,7 +133,7 @@ namespace NPOIHelper
         /// <param name="colsValue">当前值</param>
         public void FormattedValue(ICell cell, object rowData, int rowIndex, ref string colsValue)
         {
-            rowIndex += 1; // 实际行号
+            rowIndex += 1; // 实际行号 标题行+1
             // format cell value
             if (this.Func != null)
             {
