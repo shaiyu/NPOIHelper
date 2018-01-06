@@ -14,6 +14,19 @@ namespace NPOIHelper
     /// </summary>
     public class ListSheet<T> : Sheet
     {
+        /// <summary>
+        /// 获取 T 的类型
+        /// </summary>
+        /// <returns></returns>
+        public Type GetClazz()
+        {
+            var clazz = typeof(T);
+            if (clazz.Name.ToLower() == "object" && Data.Count > 0)
+            {
+                clazz = Data.FirstOrDefault().GetType();
+            }
+            return clazz;
+        }
 
         /// <summary>
         /// 数据源
@@ -35,7 +48,7 @@ namespace NPOIHelper
         {
             if (this.Columns == null)
                 return;
-            var clazz = typeof(T);
+            var clazz = GetClazz();
             List<Column> columnList = new List<Column>(1);
             for (int i = 0; i < this.Columns.Length; i++)
             {
@@ -55,7 +68,7 @@ namespace NPOIHelper
         {
             if (Data != null && Data.Count > 0)
             {
-                Type clazz = typeof(T);
+                Type clazz = GetClazz();
                 Type clazz2 = typeof(ColumnTypeAttribute);
                 string titleName = "";
                 List<Column> columnList = new List<Column>(1);
@@ -94,7 +107,7 @@ namespace NPOIHelper
                 // 表格值
                 string colsValue = null;
                 ICellStyle cellStyle = null;
-                var clazz = typeof(T);
+                var clazz = GetClazz();
                 foreach (T t in Data)
                 {
                     IRow _row = SheetThis.CreateRow(start);

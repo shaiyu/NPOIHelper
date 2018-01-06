@@ -18,6 +18,11 @@ namespace ConsoleTest
             var list = getList();
             DataTable dt = getDt();
 
+            List <dynamic> list2 = new List<dynamic> {
+                new { Pwd = "123"},
+                new { Pwd = "1234567"},
+            };
+
             //instantiation
             ExcelHelper helper = new ExcelHelper();
 
@@ -36,6 +41,11 @@ namespace ConsoleTest
                         var user = (User)t;
                         return user.Name + "---------" + user.Pwd;
                 }),
+            });
+
+            helper.Add<dynamic>("dynamic的List", list2, new Column[] {
+                new Column("Pwd","密码"),
+                new Column("Name","姓名"), //不存在的不导出
             });
 
             // for test DataTable

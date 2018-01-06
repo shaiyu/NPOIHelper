@@ -45,7 +45,7 @@ namespace NPOIHelper
         public string FixedValue { get; set; }
 
         /// <summary>
-        /// 转换函数 DataRow ColsValue Index
+        /// 转换函数 DataRow Index ColsValue
         /// </summary>
         public Func<object, int, string> Func { get; set; }
 
