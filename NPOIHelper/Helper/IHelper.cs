@@ -14,6 +14,11 @@ namespace NPOIHelper
     public interface IHelper
     {
         /// <summary>
+        /// 导出前
+        /// </summary>
+        void PreReport();
+
+        /// <summary>
         /// Http导出报表
         /// </summary>
         void Report();

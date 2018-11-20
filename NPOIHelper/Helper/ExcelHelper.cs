@@ -102,6 +102,15 @@ namespace NPOIHelper
             workbook = new HSSFWorkbook();
             IFont font = workbook.GetFontAt((short)0);
             font.FontName = "宋体";
+
+            SetInformation();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void PreReport()
+        {
         }
 
         /// <summary>
@@ -109,6 +118,8 @@ namespace NPOIHelper
         /// </summary>
         public void Report()
         {
+            PreReport();
+
             //下载报表
             var res = System.Web.HttpContext.Current.Response;
             res.Clear();
@@ -131,6 +142,7 @@ namespace NPOIHelper
         /// <param name="fileName"></param>
         public void ReportClient(string fileName)
         {
+            PreReport();
 
             using (FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
             {
@@ -153,7 +165,12 @@ namespace NPOIHelper
         }
 
         /// <summary>
-        /// 配置文件信息
+        /// <para>配置文件信息</para>
+        /// <para>si.Author 填加xls文件作者信息</para>
+        /// <para>si.LastAuthor 填加xls文件最后保存者信息</para>
+        /// <para>si.Comments </para>
+        /// <para>si.Title 填加xls文件标题信息</para>
+        /// <para>si.Subject 填加文件主题信息</para>
         /// </summary>
         public void SetInformation()
         {
@@ -168,7 +185,7 @@ namespace NPOIHelper
                 si.Author = "畅途"; //填加xls文件作者信息
                 si.ApplicationName = "NPOI程序"; //填加xls文件创建程序信息
                 si.LastAuthor = "Labbor"; //填加xls文件最后保存者信息
-                si.Comments = "畅途汽车技术服务有限公司所有"; //填加xls文件作者信息
+                si.Comments = "畅途汽车技术服务有限公司所有"; 
                 si.Title = "畅途汽车技术服务有限公司"; //填加xls文件标题信息
                 si.Subject = "畅途汽车技术服务有限公司";//填加文件主题信息
                 si.CreateDateTime = DateTime.Now;
@@ -202,5 +219,6 @@ namespace NPOIHelper
             dt.Rows.Cast<DataRow>().Skip(start).Take(len).ToList().ForEach(row => newDt.ImportRow(row));
             return newDt;
         }
+
     }
 }
