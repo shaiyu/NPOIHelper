@@ -45,7 +45,7 @@ namespace NPOIHelper
         /// </summary>
         /// <param name="workBook"></param>
         /// <returns></returns>
-        public override ICellStyle CreateCellStyle(HSSFWorkbook workBook)
+        public override ICellStyle CreateCellStyle(IWorkbook workBook)
         {
             return null;
         }

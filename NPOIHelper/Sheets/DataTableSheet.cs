@@ -22,7 +22,7 @@ namespace NPOIHelper
         /// <summary>
         /// 构造
         /// </summary>
-        public DataTableSheet(HSSFWorkbook workBook, DataTable data, string sheetName) : base(workBook, sheetName)
+        public DataTableSheet(IWorkbook workBook, DataTable data, string sheetName) : base(workBook, sheetName)
         {
             this.Data = data;
         }
@@ -30,7 +30,7 @@ namespace NPOIHelper
         /// <summary>
         /// 构造
         /// </summary>
-        public DataTableSheet(HSSFWorkbook workBook, DataTable data, string sheetName, Column[] columns) : base(workBook, sheetName)
+        public DataTableSheet(IWorkbook workBook, DataTable data, string sheetName, Column[] columns) : base(workBook, sheetName)
         {
             this.Data = data;
             this.Columns = columns;

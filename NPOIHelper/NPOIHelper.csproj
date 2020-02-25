@@ -58,6 +58,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helper\HSSFExcelHelper.cs" />
+    <Compile Include="Helper\XSSFExcelHelper.cs" />
     <Compile Include="IDataType\DateTimeDataType.cs" />
     <Compile Include="IDataType\Number2DataType.cs" />
     <Compile Include="IDataType\Number0DataType.cs" />

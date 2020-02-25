@@ -36,7 +36,7 @@ namespace NPOIHelper
         /// <summary>
         /// 构造
         /// </summary>
-        public ListSheet(HSSFWorkbook workBook, List<T> data, string sheetName) : base(workBook, sheetName)
+        public ListSheet(IWorkbook workBook, List<T> data, string sheetName) : base(workBook, sheetName)
         {
             this.Data = data;
         }

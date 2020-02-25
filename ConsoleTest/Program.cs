@@ -24,7 +24,8 @@ namespace ConsoleTest
             };
 
             //instantiation
-            ExcelHelper helper = new ExcelHelper();
+            //ExcelHelper helper = new HSSFExcelHelper();
+            ExcelHelper helper = new XSSFExcelHelper();
 
             // for test List
             helper.Add<User>("使用List NULL", null);
@@ -37,7 +38,7 @@ namespace ConsoleTest
                         var user = (User)t;
                         return user.Name + "---------" + user.Pwd + "|Index:"+index;
                 }),
-                new Column("Name","姓名2",ColumnType.Default,(t)=> {
+                new Column("Name","姓名2",ColumnType.Default,(t, row)=> {
                         var user = (User)t;
                         return user.Name + "---------" + user.Pwd;
                 }),
@@ -49,7 +50,7 @@ namespace ConsoleTest
             });
 
             // for test DataTable
-            helper.Add("指定Column的Dt", dt, new Column[] {
+            helper.Add("指定Column的DataTable", dt, new Column[] {
                 new Column("Name","姓名"),
                 new Column("Pwd","密码"),
                 new Column("Age","年龄", ColumnType.NumDecimal2),
@@ -60,7 +61,7 @@ namespace ConsoleTest
                 new Column("BirthDay","生日", ColumnType.DateFile),
             });
 
-            helper.Add("使用Fun的Dt", dt, new Column[] {
+            helper.Add("使用Fun的DataTable", dt, new Column[] {
                     new Column("Name","姓名",ColumnType.Default,(t, index)=> {
                         var dr = (DataRow)t;
                         return dr["Name"]+"---------"+ dr["Pwd"] + "|Index:"+index;
@@ -71,10 +72,10 @@ namespace ConsoleTest
                     }) { IsFormula=true },
             });
             // last, export
-            helper.ReportClient("/test.xls");
+            helper.ReportClient("/test.xlsx");
 
 
-            var file = new FileInfo("/test.xls");
+            var file = new FileInfo("/test.xlsx");
             Console.WriteLine(file.FullName);
             if (System.IO.File.Exists(file.FullName))
             {
@@ -110,7 +111,7 @@ namespace ConsoleTest
 
             //dt.Rows.Count + 1 是当前行  再+1, 是即将要加的行
             var formula = "C" + (dt.Rows.Count + 2) + "*D" + (dt.Rows.Count + 2);
-            for (int i = 0; i < 101; i++)
+            for (int i = 0; i < 103; i++)
             {
                 dt.Rows.Add("Lisa Dt" + i, "Dt" + i, i, DateTime.Now.AddDays(i), formula);
             }

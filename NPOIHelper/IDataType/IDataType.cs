@@ -37,7 +37,7 @@ namespace NPOIHelper
         /// </summary>
         /// <param name="workBook"></param>
         /// <returns></returns>
-        public abstract ICellStyle CreateCellStyle(HSSFWorkbook workBook);
+        public abstract ICellStyle CreateCellStyle(IWorkbook workBook);
 
     }
 }

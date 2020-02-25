@@ -17,7 +17,7 @@ namespace NPOIHelper
         /// <summary>
         /// 构造
         /// </summary>
-        public Sheet(HSSFWorkbook workBook, string sheetName)
+        public Sheet(IWorkbook workBook, string sheetName)
         {
             this.WorkBook = workBook;
             this.SheetName = this.InitialSheetName = sheetName;
@@ -28,7 +28,7 @@ namespace NPOIHelper
         }
 
         /// <summary>
-        /// Excel Sheet的最大行数
+        /// Excel Sheet的最大行数 2003版之前最大是2^16 = 65535
         /// </summary>
         public static int MaxRow = 65535;
         //public static int MaxRow = 20;
@@ -36,7 +36,7 @@ namespace NPOIHelper
         /// <summary>
         /// 当前Excel文件实例
         /// </summary>
-        public HSSFWorkbook WorkBook { get; set; }
+        public IWorkbook WorkBook { get; set; }
 
         /// <summary>
         /// 当前表实例
@@ -181,7 +181,7 @@ namespace NPOIHelper
         /// </summary>
         /// <param name="wk"></param>
         /// <returns></returns>
-        public static ICellStyle GetTitleStyle(HSSFWorkbook wk)
+        public static ICellStyle GetTitleStyle(IWorkbook wk)
         {
             IFont font = wk.CreateFont();
             font.FontName = "宋体";
