@@ -1,6 +1,13 @@
 # NPOIHelper
-Export Excel NPOIHelper
+Export Excel NPOIHelper   
+use 
+https://github.com/shaiyu/NPOIHelper
 # Prepare Model
+######使用注解 ColumnType
+Name：导出的标题名称
+Hide：是否不导出，默认导出 
+Type: 导出的类型
+```
         //Model
         public class User
         {
@@ -15,15 +22,19 @@ Export Excel NPOIHelper
                 this.Pwd = pwd;
             }
 
-            [ColumnType(Name = "Test", Hide = false)]
+            [ColumnType(Name = "Test", Hide = false, Type = ColumnType.String)]
             public string Name { get; set; }
 
             [ColumnType(Hide = true)]
             public string Pwd { get; set; }
         }
+```
 # 1.Instantiation
-            ExcelHelper helper = new ExcelHelper();
-# 2.Fill Data 
+            //.xls file 
+            ExcelHelper helper = new HSSFExcelHelper();
+            //.xlsx file 
+            ExcelHelper helper = new XSSFExcelHelper();
+# 2.Export List Data 
 ### 2.1Export List Data 
 ###### 2.1.1helper.Add<User>(SheetName, ListData);
             // for test List
@@ -67,5 +78,7 @@ Export Excel NPOIHelper
 ###### 3.1 Http Report
             helper.Report();
 ###### 3.2 Client Report
+            //.xls file
             helper.ReportClient("/test.xls");
-
+            //.xlsx file
+            helper.ReportClient("/test.xlsx");
