@@ -186,7 +186,8 @@ namespace NPOIHelper
             IFont font = wk.CreateFont();
             font.FontName = "宋体";
             font.FontHeightInPoints = 12;
-            font.Boldweight = short.MaxValue;
+            //font.Boldweight = short.MaxValue;
+            font.IsBold = true;
             ICellStyle style = wk.CreateCellStyle();
             style.SetFont(font);
             style.Alignment = HorizontalAlignment.Center;

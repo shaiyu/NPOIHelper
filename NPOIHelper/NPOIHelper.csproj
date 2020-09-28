@@ -1,95 +1,26 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E44C9200-49D0-4215-8DBB-3A636D1A724A}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NPOIHelper</RootNamespace>
-    <AssemblyName>NPOIHelper</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <Version>2.0.0</Version>
+    <PackageVersion>2.0.0</PackageVersion>
+    <PackageProjectUrl></PackageProjectUrl>
+    <RepositoryUrl>https://github.com/shaiyu/NPOIHelper</RepositoryUrl>
+    <RepositoryType>github</RepositoryType>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description></Description>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\NPOIHelper.XML</DocumentationFile>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
-    <Reference Include="NPOI, Version=2.4.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NPOI.2.4.0\lib\net40\NPOI.dll</HintPath>
-    </Reference>
-    <Reference Include="NPOI.OOXML, Version=2.4.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NPOI.2.4.0\lib\net40\NPOI.OOXML.dll</HintPath>
-    </Reference>
-    <Reference Include="NPOI.OpenXml4Net, Version=2.4.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NPOI.2.4.0\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
-    </Reference>
-    <Reference Include="NPOI.OpenXmlFormats, Version=2.4.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NPOI.2.4.0\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Helper\HSSFExcelHelper.cs" />
-    <Compile Include="Helper\XSSFExcelHelper.cs" />
-    <Compile Include="IDataType\DateTimeDataType.cs" />
-    <Compile Include="IDataType\Number2DataType.cs" />
-    <Compile Include="IDataType\Number0DataType.cs" />
-    <Compile Include="IDataType\NumberScientificNotationDataType.cs" />
-    <Compile Include="IDataType\NumberNDataType.cs" />
-    <Compile Include="Sheets\Column.cs" />
-    <Compile Include="IDataType\ColumnTypeAttribute.cs" />
-    <Compile Include="IDataType\NumberDataType.cs" />
-    <Compile Include="IDataType\NumberPrecentageDataType.cs" />
-    <Compile Include="IDataType\DateDataType.cs" />
-    <Compile Include="IDataType\DefaultDataType.cs" />
-    <Compile Include="IDataType\TypeFactory.cs" />
-    <Compile Include="Sheets\ListSheet.cs" />
-    <Compile Include="Sheets\DataTableSheet.cs" />
-    <Compile Include="IDataType\ColumnType.cs" />
-    <Compile Include="IDataType\IDataType.cs" />
-    <Compile Include="Helper\ExcelHelper.cs" />
-    <Compile Include="Helper\IHelper.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sheets\Sheet.cs" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="NPOI" Version="2.5.1" />
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="packages.config" />
+    <Folder Include="Properties\" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

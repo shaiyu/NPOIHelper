@@ -28,8 +28,6 @@ namespace NPOIHelper
         {
             switch (columnType)
             {
-                case ColumnType.Default:
-                    break;
                 case ColumnType.Number:
                     return new NumberDataType(ColumnType.Number);
                 case ColumnType.NumDecimal0:
@@ -45,7 +43,8 @@ namespace NPOIHelper
                 case ColumnType.DateTime:
                     return new DateTimeDataType(ColumnType.DateTime);
                 case ColumnType.DateFile:
-                    break;
+                    //throw new NotImplementedException("暂未实现");
+                case ColumnType.Default:
                 case ColumnType.String:
                 default:
                     break;

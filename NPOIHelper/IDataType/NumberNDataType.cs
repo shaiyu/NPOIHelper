@@ -20,7 +20,7 @@ namespace NPOIHelper
         /// </summary>
         /// <param name="columnType"></param>
         /// <param name="digital">小数点后的位数</param>
-        public NumberNDataType(ColumnType columnType,int digital) : base(columnType)
+        public NumberNDataType(ColumnType columnType, int digital) : base(columnType)
         {
             this.Digital = digital;
         }

@@ -10,9 +10,18 @@ using System.Threading.Tasks;
 
 namespace NPOIHelper
 {
+    /// <summary>
+    /// 扩展名.xlsx
+    /// Excel2007的版本
+    /// </summary>
     public class XSSFExcelHelper : ExcelHelper
     {
         XSSFWorkbook xssfWorkbook;
+
+        internal XSSFExcelHelper()
+        {
+
+        }
 
         /// <summary>
         /// 添加Sheet
@@ -37,30 +46,6 @@ namespace NPOIHelper
             SetInformation();
         }
 
-        public override void PreReport()
-        {
-        }
-
-        public override void Report()
-        {
-            PreReport();
-
-            //下载报表
-            var res = System.Web.HttpContext.Current.Response;
-            res.Clear();
-            res.Buffer = true;
-            res.Charset = "GBK";
-            res.AddHeader("Content-Disposition", "attachment; filename=" + this.ExcelName + ".xls");
-            res.ContentEncoding = System.Text.Encoding.GetEncoding("GBK");
-            res.ContentType = "application/vnd.ms-excel;charset=GBK";
-
-            //Wirte Stream 
-            this.WorkBook.Write(res.OutputStream);
-
-            res.Flush();
-            res.End();
-        }
-
         /// <summary>
         /// <para>配置文件信息</para>
         /// <para>si.Author 填加xls文件作者信息</para>
@@ -81,13 +66,13 @@ namespace NPOIHelper
                 //文档摘要信息
                 if (!customProperties.Contains("Company"))
                 {
-                    customProperties.AddProperty("Company", "畅途汽车技术服务有限公司");
+                    customProperties.AddProperty("Company", "xxx技术服务有限公司");
                 }
 
-                coreProperties.Creator = "畅途"; //填加xlsx文件作者信息
+                coreProperties.Creator = "Labbor"; //填加xlsx文件作者信息
                 coreProperties.Keywords = "Labbor"; //填加xls文件最后保存者信息
-                coreProperties.Title = "畅途汽车技术服务有限公司"; //填加xls文件标题信息
-                coreProperties.Subject = "畅途汽车技术服务有限公司";//填加文件主题信息
+                coreProperties.Title = "xxx技术服务有限公司"; //填加xls文件标题信息
+                coreProperties.Subject = "xxx技术服务有限公司";//填加文件主题信息
                 coreProperties.Created = DateTime.Now;
             }
             #endregion

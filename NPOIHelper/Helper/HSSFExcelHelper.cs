@@ -9,9 +9,14 @@ using System.Threading.Tasks;
 
 namespace NPOIHelper
 {
+    /// <summary>
+    /// 扩展名.xls
+    /// Excel2003以前（包括2003）
+    /// </summary>
     public class HSSFExcelHelper : ExcelHelper
     {
         HSSFWorkbook hssfWorkbook;
+        internal HSSFExcelHelper() { }
 
         /// <summary>
         /// 添加Sheet
@@ -36,30 +41,6 @@ namespace NPOIHelper
             SetInformation();
         }
 
-        public override void PreReport()
-        {
-        }
-
-        public override void Report()
-        {
-            PreReport();
-
-            //下载报表
-            var res = System.Web.HttpContext.Current.Response;
-            res.Clear();
-            res.Buffer = true;
-            res.Charset = "GBK";
-            res.AddHeader("Content-Disposition", "attachment; filename=" + this.ExcelName + ".xlsx");
-            res.ContentEncoding = System.Text.Encoding.GetEncoding("GBK");
-            res.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=GBK";
-
-            //Wirte Stream 
-            this.WorkBook.Write(res.OutputStream);
-
-            res.Flush();
-            res.End();
-        }
-
         /// <summary>
         /// <para>配置文件信息</para>
         /// <para>si.Author 填加xls文件作者信息</para>
@@ -74,16 +55,16 @@ namespace NPOIHelper
             {
                 //文档摘要信息
                 DocumentSummaryInformation dsi = PropertySetFactory.CreateDocumentSummaryInformation();
-                dsi.Company = "畅途汽车技术服务有限公司";
+                dsi.Company = "xxx技术服务有限公司";
                 hssfWorkbook.DocumentSummaryInformation = dsi;
                 //
                 SummaryInformation si = PropertySetFactory.CreateSummaryInformation();
-                si.Author = "畅途"; //填加xls文件作者信息
+                si.Author = "Labbor"; //填加xls文件作者信息
                 si.ApplicationName = "NPOI程序"; //填加xls文件创建程序信息
                 si.LastAuthor = "Labbor"; //填加xls文件最后保存者信息
-                si.Comments = "畅途汽车技术服务有限公司所有";
-                si.Title = "畅途汽车技术服务有限公司"; //填加xls文件标题信息
-                si.Subject = "畅途汽车技术服务有限公司";//填加文件主题信息
+                si.Comments = "xxx技术服务有限公司所有";
+                si.Title = "xxx技术服务有限公司"; //填加xls文件标题信息
+                si.Subject = "xxx技术服务有限公司";//填加文件主题信息
                 si.CreateDateTime = DateTime.Now;
                 hssfWorkbook.SummaryInformation = si;
             }

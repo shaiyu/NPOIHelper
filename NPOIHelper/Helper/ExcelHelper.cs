@@ -3,6 +3,7 @@ using NPOI.HPSF;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
+using NPOIHelper.Enums;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,9 +17,9 @@ namespace NPOIHelper
     /// <summary>
     /// 帮助类
     /// </summary>
-    public abstract class ExcelHelper : IHelper
+    public abstract class ExcelHelper : IExcelHelper
     {
-        IWorkbook workbook;
+        private IWorkbook workbook;
 
         /// <summary>
         /// 当前工作表
@@ -28,27 +29,26 @@ namespace NPOIHelper
         /// <summary>
         /// Excel表名
         /// </summary>
-        public string ExcelName { get; set; }
+        public string FileName { get; set; }
+        public string Extension { get; set; }
+        public string FullName
+        {
+            get
+            {
+                return $"{FileName}.{Extension}";
+            }
+        }
+        public string ContentType { get; set; }
+        public NPOIType Type { get; set; }
 
         /// <summary>
         /// 构造方法
         /// </summary>
         public ExcelHelper()
         {
-            this.ExcelName = "默认名称";
-            this.Init();
+            FileName = "默认名称";
+            Init();
         }
-
-        /// <summary>
-        /// 构造方法
-        /// </summary>
-        /// <param name="_ExcelName"></param>
-        public ExcelHelper(string _ExcelName)
-        {
-            this.ExcelName = _ExcelName;
-            this.Init();
-        }
-
 
         /// <summary>
         /// 创建并初始化工作簿
@@ -105,12 +105,22 @@ namespace NPOIHelper
         /// <summary>
         /// 
         /// </summary>
-        public abstract void PreReport();
+        public void PreReport()
+        {
+
+        }
 
         /// <summary>
         /// <para>Http导出 清空响应流,并写入数据</para>
         /// </summary>
-        public abstract void Report();
+        public byte[] ToArray()
+        {
+            using (var stream = new MemoryStream())
+            {
+                workbook.Write(stream);
+                return stream.ToArray();
+            }
+        }
 
         /// <summary>
         /// <para>WinForm等客户端导出</para>
@@ -170,4 +180,18 @@ namespace NPOIHelper
             return newDt;
         }
     }
+
+
+    public class NPOIHelperBuild
+    {
+        public static IExcelHelper GetHelper(NPOIType type = NPOIType.xlsx)
+        {
+            if (type == NPOIType.xlsx)
+            {
+                return new XSSFExcelHelper() { Type = type, ContentType = type.GetDefaultValue<string>(), Extension = "xlsx" };
+            }
+            return new HSSFExcelHelper() { Type = type, ContentType = type.GetDefaultValue<string>(), Extension = "xls" };
+        }
+    }
+
 }
