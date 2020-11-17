@@ -3,12 +3,15 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
     <Version>2.0.0</Version>
-    <PackageVersion>2.0.0</PackageVersion>
-    <PackageProjectUrl></PackageProjectUrl>
+    <PackageVersion>2.0.1</PackageVersion>
+    <PackageProjectUrl>https://github.com/shaiyu/NPOIHelper</PackageProjectUrl>
     <RepositoryUrl>https://github.com/shaiyu/NPOIHelper</RepositoryUrl>
     <RepositoryType>github</RepositoryType>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Description></Description>
+    <Description>三行代码快速生成Excel报表</Description>
+    <NeutralLanguage />
+    <Authors>Labbor</Authors>
+    <Company>Labbor</Company>
   </PropertyGroup>
 
 
