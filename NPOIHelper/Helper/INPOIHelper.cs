@@ -1,5 +1,4 @@
 ﻿using NPOI.SS.UserModel;
-using NPOIHelper.Enums;
 
 namespace NPOIHelper
 {
@@ -9,9 +8,22 @@ namespace NPOIHelper
     /// </summary>
     public interface INPOIHelper
     {
+        /// <summary>
+        /// 文件名
+        /// </summary>
         string FileName { get; set; }
+        /// <summary>
+        /// 扩展名
+        /// </summary>
         string Extension { get; }
+        /// <summary>
+        /// 包含扩展名的文件名称
+        /// </summary>
         string FullName { get; }
+
+        /// <summary>
+        /// 文件的Http ContentType
+        /// </summary>
         string ContentType { get; }
         IWorkbook WorkBook { get; }
         NPOIType Type { get; }

@@ -2,16 +2,37 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
     <Version>2.0.0</Version>
     <PackageVersion>2.0.1</PackageVersion>
     <PackageProjectUrl>https://github.com/shaiyu/NPOIHelper</PackageProjectUrl>
     <RepositoryUrl>https://github.com/shaiyu/NPOIHelper</RepositoryUrl>
     <RepositoryType>github</RepositoryType>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Description>三行代码快速生成Excel报表</Description>
+    <Description>
+      快速生成Excel报表
+      
+      var helper = NPOIHelperBuild.GetHelper();
+      helper.Add("sheet1", data);
+      return File(helper.ToArray(), helper.ContentType, helper.FullName);
+
+
+
+      快速读取Excel
+
+      //读取到List
+      NPOIHelperBuild.ReadExcel%3CImportUser%3E("TestImportExcel/test1.xlsx");
+      
+      //读取到DataTable
+      NPOIHelperBuild.ReadExcel("TestImportExcel/test1.xlsx");
+    </Description>
     <NeutralLanguage />
     <Authors>Labbor</Authors>
     <Company>Labbor</Company>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+    <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
 
 

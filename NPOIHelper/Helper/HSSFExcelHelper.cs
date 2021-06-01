@@ -13,7 +13,7 @@ namespace NPOIHelper
     /// 扩展名.xls
     /// Excel2003以前（包括2003）
     /// </summary>
-    public class HSSFExcelHelper : ExcelHelper
+    internal class HSSFExcelHelper : ExcelHelper
     {
         HSSFWorkbook hssfWorkbook;
         internal HSSFExcelHelper() { }

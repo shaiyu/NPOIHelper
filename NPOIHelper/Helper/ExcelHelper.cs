@@ -3,7 +3,6 @@ using NPOI.HPSF;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
-using NPOIHelper.Enums;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,7 +16,7 @@ namespace NPOIHelper
     /// <summary>
     /// 帮助类
     /// </summary>
-    public abstract class ExcelHelper : IExcelHelper
+    internal abstract class ExcelHelper : IExcelHelper
     {
         private IWorkbook workbook;
 
@@ -30,7 +29,7 @@ namespace NPOIHelper
         /// Excel表名
         /// </summary>
         public string FileName { get; set; }
-        public string Extension { get; set; }
+        public string Extension => Type.ToString();
         public string FullName
         {
             get
@@ -38,7 +37,7 @@ namespace NPOIHelper
                 return $"{FileName}.{Extension}";
             }
         }
-        public string ContentType { get; set; }
+        public string ContentType => Type.GetDefaultValue<string>();
         public NPOIType Type { get; set; }
 
         /// <summary>
@@ -182,16 +181,5 @@ namespace NPOIHelper
     }
 
 
-    public class NPOIHelperBuild
-    {
-        public static IExcelHelper GetHelper(NPOIType type = NPOIType.xlsx)
-        {
-            if (type == NPOIType.xlsx)
-            {
-                return new XSSFExcelHelper() { Type = type, ContentType = type.GetDefaultValue<string>(), Extension = "xlsx" };
-            }
-            return new HSSFExcelHelper() { Type = type, ContentType = type.GetDefaultValue<string>(), Extension = "xls" };
-        }
-    }
 
 }

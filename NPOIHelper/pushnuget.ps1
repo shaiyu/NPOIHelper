@@ -1,3 +1,3 @@
 
-
-dotnet nuget push .\bin\Release\NPOIHelper.2.0.1.nupkg -k key -s https://www.nuget.org
+dotnet pack -p:PackageVersion=$args
+dotnet nuget push .\bin\Debug\NPOIHelper.$args.nupkg -k key -s https://www.nuget.org

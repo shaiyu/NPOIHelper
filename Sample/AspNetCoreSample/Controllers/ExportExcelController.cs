@@ -36,7 +36,7 @@ namespace AspNetCoreSample.Controllers
         public void ExportExcelSomeList()
         {
             var data = GetList();
-            var helper = NPOIHelperBuild.GetHelper(NPOIHelper.Enums.NPOIType.xls);
+            var helper = NPOIHelperBuild.GetHelper(NPOIType.xls);
             helper.FileName = "List报表";
             helper.Add("用户列表1", data);
             helper.Add("用户列表2", data);

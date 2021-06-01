@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreSample", "Sample\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTest", "Sample\ConsoleTest\ConsoleTest.csproj", "{9581A922-C8B5-462B-9921-15C76587A2B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPOIHelperWebExtension", "NPOIHelperWebExtension\NPOIHelperWebExtension.csproj", "{776AB0C5-9A23-4B51-AF9F-B97BD23519D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NPOIHelperWebExtension", "NPOIHelperWebExtension\NPOIHelperWebExtension.csproj", "{776AB0C5-9A23-4B51-AF9F-B97BD23519D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPOIHelperTest", "NPOIHelperTest\NPOIHelperTest.csproj", "{31775F40-E619-4C38-BF2E-3F87902E78DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{776AB0C5-9A23-4B51-AF9F-B97BD23519D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{776AB0C5-9A23-4B51-AF9F-B97BD23519D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{776AB0C5-9A23-4B51-AF9F-B97BD23519D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31775F40-E619-4C38-BF2E-3F87902E78DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31775F40-E619-4C38-BF2E-3F87902E78DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31775F40-E619-4C38-BF2E-3F87902E78DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31775F40-E619-4C38-BF2E-3F87902E78DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,6 +48,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{5A5C13D8-48C8-4C2E-BA4B-A3DDE24063D5} = {CB8C33A6-1742-4A1A-AA46-A1CF5D036045}
 		{9581A922-C8B5-462B-9921-15C76587A2B4} = {CB8C33A6-1742-4A1A-AA46-A1CF5D036045}
+		{31775F40-E619-4C38-BF2E-3F87902E78DB} = {CB8C33A6-1742-4A1A-AA46-A1CF5D036045}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {11A34258-2090-45CA-8C4C-747C48067047}

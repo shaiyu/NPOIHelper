@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Text;
 
-namespace NPOIHelper.Enums
+namespace NPOIHelper
 {
     public static class GlobalEnums
     {
@@ -44,14 +44,33 @@ namespace NPOIHelper.Enums
             else
                 return attrs.Value == null ? default(T) : (T)attrs.Value;
         }
+
+        public static TValue GetTitleName<TValue>(this Enum @enum)
+        {
+            return GetAttributeValue<TitleNameAttribute, TValue>(@enum);
+        }
+
+        /// <summary>
+        /// 获取枚举携带的值
+        /// </summary>
+        /// <typeparam name="TAttr"></typeparam>
+        /// <param name="enum"></param>
+        /// <returns></returns>
+        public static TValue GetAttributeValue<TAttr, TValue>(this System.Enum @enum) where TAttr : ValueAttribute
+        {
+            Type type = @enum.GetType();
+            FieldInfo field = type.GetField(@enum.ToString());
+            if (field == null)
+                return default;
+
+            var attrs = field.GetCustomAttribute<TAttr>();
+
+            if (attrs == null)
+                return default;
+            else
+                return (TValue)attrs.Value ?? default;
+        }
     }
 
-    public enum NPOIType
-    {
-        [DefaultValue("application/vnd.ms-excel")]
-        xls,
-        [DefaultValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")]
-        xlsx
-    }
 
 }

@@ -14,7 +14,7 @@ namespace NPOIHelper
     /// 扩展名.xlsx
     /// Excel2007的版本
     /// </summary>
-    public class XSSFExcelHelper : ExcelHelper
+    internal class XSSFExcelHelper : ExcelHelper
     {
         XSSFWorkbook xssfWorkbook;
 
