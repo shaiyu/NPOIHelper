@@ -24,24 +24,28 @@ namespace NPOIHelper
         /// <summary>
         /// Excel文件地址
         /// </summary>
-        public string FileName { get; }
+        //public string FileName { get; }
         /// <summary>
         /// Excel列数
         /// </summary>
         public int ColumnLength { get; protected set; } = 11;
 
-        public ExcelReader(string fileName, int columnLength = 11)
+        public ExcelReader(string fileName, NPOIType type, int columnLength = 11)
         {
-            FileName = fileName;
-
-            Type = GetType(fileName);
+            Type = type;
             Workbook = ReadFile(fileName);
+            ColumnLength = columnLength;
+        }
+
+        public ExcelReader(Stream stream, NPOIType type, int columnLength = 11)
+        {
+            Type = type;
+            Workbook = ReadFile(stream);
             ColumnLength = columnLength;
         }
 
         public IWorkbook ReadFile(string fileName)
         {
-            IWorkbook workbook;
             //初始化信息
             try
             {
@@ -49,36 +53,29 @@ namespace NPOIHelper
                 //开启共享锁，即使被占用也能打开
                 using (FileStream file = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
-                    if (Type == NPOIType.xlsx)
-                    {
-                        //workbook = new XSSFWorkbook(fileName);
-                        workbook = new XSSFWorkbook(file);
-                    }
-                    else
-                    {
-                        workbook = new HSSFWorkbook(file);
-                    }
+                    return ReadFile(file);
                 }
             }
             catch (Exception e)
             {
                 throw e;
             }
-            return workbook;
         }
 
-        public NPOIType GetType(string fileName)
+        public IWorkbook ReadFile(Stream stram)
         {
-            var ext = Path.GetExtension(fileName);
-            if (ext == "." + NPOIType.xlsx.ToString())
+            IWorkbook workbook;
+            //初始化信息
+            if (Type == NPOIType.xlsx)
             {
-                return NPOIType.xlsx;
+                //workbook = new XSSFWorkbook(fileName);
+                workbook = new XSSFWorkbook(stram);
             }
-            else if (ext == "." + NPOIType.xls.ToString())
+            else
             {
-                return NPOIType.xls;
+                workbook = new HSSFWorkbook(stram);
             }
-            throw new NotSupportedException("不支持的Excel文件类型");
+            return workbook;
         }
 
 

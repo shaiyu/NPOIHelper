@@ -13,7 +13,10 @@ namespace NPOIHelper
 {
     internal class DataTableExcelReader : ExcelReader
     {
-        public DataTableExcelReader(string fileName, int columnLength = 11) : base(fileName, columnLength)
+        public DataTableExcelReader(string fileName, NPOIType type, int columnLength = 11) : base(fileName, type, columnLength)
+        {
+        }
+        public DataTableExcelReader(Stream stream, NPOIType type, int columnLength = 11) : base(stream, type, columnLength)
         {
         }
         public DataTable Read()

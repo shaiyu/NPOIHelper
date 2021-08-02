@@ -34,8 +34,24 @@ namespace NPOIHelper
         /// <returns></returns>
         public static IEnumerable<T> ReadExcel<T>(string excelFileName, int columnLength = 11)
         {
-            return new ListExcelReader(excelFileName, columnLength).Read<T>();
+            var type = NPOITypeUtils.GetType(excelFileName);
+            return new ListExcelReader(excelFileName, type, columnLength).Read<T>();
         }
+
+        /// <summary>
+        /// 读取excel到IEnumerable
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="stream"></param>
+        /// <param name="contentType"></param>
+        /// <param name="columnLength"></param>
+        /// <returns></returns>
+        public static IEnumerable<T> ReadExcel<T>(Stream stream, string contentType, int columnLength = 11)
+        {
+            var type = NPOITypeUtils.GetTypeByContentType(contentType);
+            return new ListExcelReader(stream, type, columnLength).Read<T>();
+        }
+
 
         /// <summary>
         /// 读取Excel到DataTable
@@ -45,7 +61,24 @@ namespace NPOIHelper
         /// <returns></returns>
         public static DataTable ReadExcel(string excelFileName, int columnLength = 11)
         {
-            return new DataTableExcelReader(excelFileName, columnLength).Read();
+            var type = NPOITypeUtils.GetType(excelFileName);
+            return new DataTableExcelReader(excelFileName, type, columnLength).Read();
         }
+
+
+        /// <summary>
+        /// 读取excel到IEnumerable
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="stream"></param>
+        /// <param name="contentType"></param>
+        /// <param name="columnLength"></param>
+        /// <returns></returns>
+        public static DataTable ReadExcel(Stream stream, string contentType, int columnLength = 11)
+        {
+            var type = NPOITypeUtils.GetTypeByContentType(contentType);
+            return new DataTableExcelReader(stream, type, columnLength).Read();
+        }
+
     }
 }

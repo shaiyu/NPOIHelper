@@ -19,7 +19,10 @@ namespace NPOIHelper
         readonly Type nullableGuidType = typeof(Guid?);
         readonly Type stringType = typeof(string);
 
-        public ListExcelReader(string fileName, int columnLength = 11) : base(fileName, columnLength)
+        public ListExcelReader(string fileName, NPOIType type, int columnLength = 11) : base(fileName, type, columnLength)
+        {
+        }
+        public ListExcelReader(Stream stream, NPOIType type, int columnLength = 11) : base(stream, type, columnLength)
         {
         }
 
