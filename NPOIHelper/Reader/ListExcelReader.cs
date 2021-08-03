@@ -31,41 +31,75 @@ namespace NPOIHelper
         /// </summary>
         /// <param name="workbook">报表</param>
         /// <returns></returns>
-        public IEnumerable<T> Read<T>()
+        public IEnumerable<T> Read<T>(int? sheetIndex)
+        {
+            if (sheetIndex!= null)
+            {
+                return Read<T>(sheetIndex.Value);
+            }
+
+            IEnumerable<T> list = null;
+            //对应Excel表格中的属性信息
+            foreach (var sheet in Sheets)
+            {
+                if (sheet.PhysicalNumberOfRows <= 0) //实际行数，判断是否为空工作表
+                {
+                    continue;
+                }
+                if (list == null)
+                {
+                    list = ReadSheet<T>(sheet);
+                }
+                else
+                {
+                    list.Concat(ReadSheet<T>(sheet));
+                }
+            }
+            return list;
+        }
+
+        public IEnumerable<T> Read<T>(int sheetIndex)
+        {
+            if (Sheets.Count - 1 < sheetIndex)
+            {
+                throw new ArgumentOutOfRangeException(nameof(sheetIndex));
+            }
+
+            var sheet = Sheets[sheetIndex];
+            return ReadSheet<T>(sheet); 
+        }
+
+        public IEnumerable<T> ReadSheet<T>(ISheet sheet)
         {
             //对应Excel表格中的属性信息
             PropertyInfo[] properties = null;
             IRow row;
-            bool isFirstRow;
-            foreach (var sheet in Sheets)
-            {
-                isFirstRow = true;
-                IEnumerator rows = sheet.GetRowEnumerator();
-                while (rows.MoveNext())
-                {
-                    row = (IRow)rows.Current;
+            bool isFirstRow = true;
 
-                    if (isFirstRow)
+            IEnumerator rows = sheet.GetRowEnumerator();
+            while (rows.MoveNext())
+            {
+                row = (IRow)rows.Current;
+
+                if (isFirstRow)
+                {
+                    isFirstRow = false;
+                    //每个表格第一行，标题行
+                    //将第一列作为列表头
+                    if (properties == null || properties.Length == 0)
                     {
-                        isFirstRow = false;
-                        //每个表格第一行，标题行
-                        //将第一列作为列表头
-                        if (properties == null || properties.Length == 0)
-                        {
-                            //并确定列数
-                            //maxcols = sheet.GetRow(0).LastCellNum;
-                            //row.LastCellNum --> colCount --> maxcols
-                            ColumnLength = row.Cells.Count > ColumnLength ? ColumnLength : row.Cells.Count;
-                            properties = GetSortProperties<T>(row);
-                        }
-                    }
-                    else
-                    {
-                        T t = ReadRow<T>(properties, row);;
-                        yield return t;
+                        //并确定列数
+                        //maxcols = sheet.GetRow(0).LastCellNum;
+                        //row.LastCellNum --> colCount --> maxcols
+                        ColumnLength = row.Cells.Count > ColumnLength ? ColumnLength : row.Cells.Count;
+                        properties = GetSortProperties<T>(row);
                     }
                 }
-
+                else
+                {
+                    T t = ReadRow<T>(properties, row); ;
+                    yield return t;
+                }
             }
         }
 

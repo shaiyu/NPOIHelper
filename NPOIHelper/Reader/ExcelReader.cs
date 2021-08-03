@@ -78,20 +78,18 @@ namespace NPOIHelper
             return workbook;
         }
 
+        public List<ISheet> Sheets => GetSheets().ToList();
 
-        public IEnumerable<ISheet> Sheets
+        public IEnumerable<ISheet> GetSheets()
         {
-            get
+            for (int k = 0; k < Workbook.NumberOfSheets; k++)
             {
-                for (int k = 0; k < Workbook.NumberOfSheets; k++)
+                ISheet sheet = Workbook.GetSheetAt(k);
+                if (sheet.PhysicalNumberOfRows <= 0) //实际行数，判断是否为空工作表
                 {
-                    ISheet sheet = Workbook.GetSheetAt(k);
-                    if (sheet.PhysicalNumberOfRows <= 0) //实际行数，判断是否为空工作表
-                    {
-                        continue;
-                    }
-                    yield return sheet;
+                    continue;
                 }
+                yield return sheet;
             }
         }
 

@@ -19,14 +19,21 @@ namespace NPOIHelper
         public DataTableExcelReader(Stream stream, NPOIType type, int columnLength = 11) : base(stream, type, columnLength)
         {
         }
-        public DataTable Read()
+        public DataTable Read(int? sheetIndex = null)
         {
             DataTable dt = new();
             IRow row;
             bool isFirstRow;
             bool isAddTitle = false;
-            foreach (var sheet in Sheets)
+
+            for (int i = 0; i < Sheets.Count; i++)
             {
+                if (sheetIndex != null && sheetIndex != i)
+                {
+                    continue;
+                }
+                var sheet = Sheets[i];
+
                 isFirstRow = true;
                 IEnumerator rows = sheet.GetRowEnumerator();
                 while (rows.MoveNext())

@@ -20,6 +20,20 @@ namespace NPOIHelperTest
         }
 
         [TestMethod]
+        [DataRow(0)]
+        [DataRow(1)]
+        public void TestReadListSheet(int sheetIndex)
+        {
+            var users = NPOIHelperBuild.ReadExcel<ImportUser2>("TestImportExcel/test1.xlsx", sheetIndex);
+
+            WriteLine(users);
+            Assert.IsNotNull(users);
+            Assert.IsTrue(users.Any());
+            CollectionAssert.AllItemsAreNotNull(users.ToList());
+        }
+
+
+        [TestMethod]
         public void TestReadListStream()
         {
             var stream = File.OpenRead("TestImportExcel/test1.xlsx");
@@ -38,7 +52,6 @@ namespace NPOIHelperTest
             var dt = NPOIHelperBuild.ReadExcel("TestImportExcel/test1.xlsx");
             WriteLine(dt);
             Assert.IsNotNull(dt);
-
         }
 
         [TestMethod]
