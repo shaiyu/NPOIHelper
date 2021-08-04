@@ -40,13 +40,27 @@ namespace NPOIHelper
             return Sheet != null && Sheet.PhysicalNumberOfRows > 0;
         }
 
-        public object ReadColumn(ICell cell)
-        {
-            object value = null;
+        public object ReadColumn(ICell cell) {
+
             if (cell == null)
             {
-                return value;
+                return null;
             }
+
+            try
+            {
+                return ReadColumnByCellType(cell);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return null;
+        }
+
+        private object ReadColumnByCellType(ICell cell)
+        {
+            object value = null;
 
             //读取Excel格式，根据格式读取数据类型
             switch (cell.CellType)
