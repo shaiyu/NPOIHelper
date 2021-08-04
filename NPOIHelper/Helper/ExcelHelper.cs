@@ -3,6 +3,7 @@ using NPOI.HPSF;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
+using NPOIHelper.Enums;
 using System;
 using System.Collections.Generic;
 using System.Data;

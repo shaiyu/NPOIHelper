@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Text;
 
-namespace NPOIHelper
+namespace NPOIHelper.Enums
 {
     public static class GlobalEnums
     {
