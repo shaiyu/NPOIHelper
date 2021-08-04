@@ -25,13 +25,13 @@ namespace NPOIHelper
             return new HSSFExcelHelper() { Type = type };
         }
 
-        public static ExcelReader GetReader<T>(string excelFileName)
+        public static ExcelReader GetReader(string excelFileName)
         {
             var type = NPOITypeUtils.GetType(excelFileName);
             return new ExcelReader(excelFileName, type);
         }
 
-        public static ExcelReader GetReader<T>(Stream stream, string contentType)
+        public static ExcelReader GetReader(Stream stream, string contentType)
         {
             var type = NPOITypeUtils.GetTypeByContentType(contentType);
             return new ExcelReader(stream, type);
