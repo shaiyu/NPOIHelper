@@ -9,7 +9,7 @@ using System.Text;
 
 namespace NPOIHelper
 {
-    public class NPOIHelperBuild
+    public partial class NPOIHelperBuild
     {
         /// <summary>
         /// 获取Excel导出帮助类
@@ -25,60 +25,16 @@ namespace NPOIHelper
             return new HSSFExcelHelper() { Type = type };
         }
 
-        /// <summary>
-        /// 读取excel到IEnumerable
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="excelFileName"></param>
-        /// <param name="columnLength"></param>
-        /// <returns></returns>
-        public static IEnumerable<T> ReadExcel<T>(string excelFileName, int? sheetIndex = null, int columnLength = 11)
+        public static ExcelReader GetReader<T>(string excelFileName)
         {
             var type = NPOITypeUtils.GetType(excelFileName);
-            return new ListExcelReader(excelFileName, type, columnLength).Read<T>(sheetIndex);
+            return new ExcelReader(excelFileName, type);
         }
 
-        /// <summary>
-        /// 读取excel到IEnumerable
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="stream"></param>
-        /// <param name="contentType"></param>
-        /// <param name="columnLength"></param>
-        /// <returns></returns>
-        public static IEnumerable<T> ReadExcel<T>(Stream stream, string contentType, int? sheetIndex = null, int columnLength = 11)
+        public static ExcelReader GetReader<T>(Stream stream, string contentType)
         {
             var type = NPOITypeUtils.GetTypeByContentType(contentType);
-            return new ListExcelReader(stream, type, columnLength).Read<T>(sheetIndex);
+            return new ExcelReader(stream, type);
         }
-
-
-        /// <summary>
-        /// 读取Excel到DataTable
-        /// </summary>
-        /// <param name="excelFileName"></param>
-        /// <param name="columnLength"></param>
-        /// <returns></returns>
-        public static DataTable ReadExcel(string excelFileName, int? sheetIndex = null, int columnLength = 11)
-        {
-            var type = NPOITypeUtils.GetType(excelFileName);
-            return new DataTableExcelReader(excelFileName, type, columnLength).Read(sheetIndex);
-        }
-
-
-        /// <summary>
-        /// 读取excel到IEnumerable
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="stream"></param>
-        /// <param name="contentType"></param>
-        /// <param name="columnLength"></param>
-        /// <returns></returns>
-        public static DataTable ReadExcel(Stream stream, string contentType, int? sheetIndex = null, int columnLength = 11)
-        {
-            var type = NPOITypeUtils.GetTypeByContentType(contentType);
-            return new DataTableExcelReader(stream, type, columnLength).Read(sheetIndex);
-        }
-
     }
 }

@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace NPOIHelper
 {
-    internal abstract class ExcelReader
+    public class ExcelReader
     {
         /// <summary>
         /// 当前工作簿
@@ -25,26 +25,20 @@ namespace NPOIHelper
         /// Excel文件地址
         /// </summary>
         //public string FileName { get; }
-        /// <summary>
-        /// Excel列数
-        /// </summary>
-        public int ColumnLength { get; protected set; } = 11;
 
-        public ExcelReader(string fileName, NPOIType type, int columnLength = 11)
+        internal ExcelReader(string fileName, NPOIType type)
         {
             Type = type;
             Workbook = ReadFile(fileName);
-            ColumnLength = columnLength;
         }
 
-        public ExcelReader(Stream stream, NPOIType type, int columnLength = 11)
+        internal ExcelReader(Stream stream, NPOIType type)
         {
             Type = type;
             Workbook = ReadFile(stream);
-            ColumnLength = columnLength;
         }
 
-        public IWorkbook ReadFile(string fileName)
+        private IWorkbook ReadFile(string fileName)
         {
             //初始化信息
             try
@@ -62,7 +56,7 @@ namespace NPOIHelper
             }
         }
 
-        public IWorkbook ReadFile(Stream stram)
+        private IWorkbook ReadFile(Stream stram)
         {
             IWorkbook workbook;
             //初始化信息
@@ -78,61 +72,37 @@ namespace NPOIHelper
             return workbook;
         }
 
-        public List<ISheet> Sheets => GetSheets().ToList();
-
-        public IEnumerable<ISheet> GetSheets()
+        public IEnumerable<T> ReadSheet<T>(int sheetIndex, int maxColumnLength = 11)
         {
-            for (int k = 0; k < Workbook.NumberOfSheets; k++)
-            {
-                ISheet sheet = Workbook.GetSheetAt(k);
-                if (sheet.PhysicalNumberOfRows <= 0) //实际行数，判断是否为空工作表
-                {
-                    continue;
-                }
-                yield return sheet;
-            }
+            var reader = new ListSheetReader(GetSheet(sheetIndex), Type, maxColumnLength);
+            return reader.ReadSheet<T>();
         }
 
-        public object ReadColumn(ICell cell)
+        public DataTable ReadSheet(int sheetIndex, int maxColumnLength = 11)
         {
-            object value = null;
-            if (cell == null)
-            {
-                return value;
-            }
+            var reader = new DataTableSheetReader(GetSheet(sheetIndex), Type, maxColumnLength);
+            return reader.ReadSheet();
+        }
 
-            //读取Excel格式，根据格式读取数据类型
-            switch (cell.CellType)
-            {
-                case CellType.Blank: //空数据类型处理
-                    break;
-                case CellType.String: //字符串类型
-                    value = cell.StringCellValue;
-                    break;
-                case CellType.Numeric: //数字类型 - >电话号码      
-                    //NPOI中数字和日期都是NUMERIC类型的，这里对其进行判断是否是日期类型
-                    if (DateUtil.IsCellDateFormatted(cell))//日期类型
-                    {
-                        value = cell.DateCellValue;
-                    }
-                    else//其他数字类型
-                    {
-                        value = cell.NumericCellValue;
-                    }
+        //public List<ISheet> Sheets => GetSheets().ToList();
 
-                    //cell.SetCellType(CellType.String);
-                    //value = cell.StringCellValue;
-                    break;
-                case CellType.Formula:
-                    IFormulaEvaluator e = Type == NPOIType.xlsx ?
-                        new XSSFFormulaEvaluator(Workbook) : new HSSFFormulaEvaluator(Workbook);
-                    value = e.Evaluate(cell).StringValue;
-                    break;
-                default:
-                    value = cell.StringCellValue;
-                    break;
-            }
-            return value;
+        //public IEnumerable<ISheet> GetSheets()
+        //{
+        //    for (int k = 0; k < Workbook.NumberOfSheets; k++)
+        //    {
+        //        ISheet sheet = Workbook.GetSheetAt(k);
+        //        if (sheet.PhysicalNumberOfRows <= 0) //实际行数，判断是否为空工作表
+        //        {
+        //            continue;
+        //        }
+        //        yield return sheet;
+        //    }
+        //}
+
+
+        public ISheet GetSheet(int sheetIndex)
+        {
+            return Workbook.GetSheetAt(sheetIndex);
         }
     }
 }

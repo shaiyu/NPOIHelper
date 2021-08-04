@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace NPOIHelper
 {
-    internal class ListExcelReader : ExcelReader
+    public class ListSheetReader : SheetReader
     {
         readonly Type dateTimeType = typeof(DateTime);
         readonly Type nullableDateTimeType = typeof(DateTime?);
@@ -19,64 +19,23 @@ namespace NPOIHelper
         readonly Type nullableGuidType = typeof(Guid?);
         readonly Type stringType = typeof(string);
 
-        public ListExcelReader(string fileName, NPOIType type, int columnLength = 11) : base(fileName, type, columnLength)
-        {
-        }
-        public ListExcelReader(Stream stream, NPOIType type, int columnLength = 11) : base(stream, type, columnLength)
+        public ListSheetReader(ISheet sheet, NPOIType type, int columnLength = 11) : base(sheet, type, columnLength)
         {
         }
 
-        /// <summary>
-        /// <para>added by Labbor on 20170325 NPOI读取数据,仅支持.xls</para>
-        /// </summary>
-        /// <param name="workbook">报表</param>
-        /// <returns></returns>
-        public IEnumerable<T> Read<T>(int? sheetIndex)
+        public IEnumerable<T> ReadSheet<T>()
         {
-            if (sheetIndex!= null)
+            if (!HasData())
             {
-                return Read<T>(sheetIndex.Value);
+                yield break;
             }
 
-            IEnumerable<T> list = null;
-            //对应Excel表格中的属性信息
-            foreach (var sheet in Sheets)
-            {
-                if (sheet.PhysicalNumberOfRows <= 0) //实际行数，判断是否为空工作表
-                {
-                    continue;
-                }
-                if (list == null)
-                {
-                    list = ReadSheet<T>(sheet);
-                }
-                else
-                {
-                    list.Concat(ReadSheet<T>(sheet));
-                }
-            }
-            return list;
-        }
-
-        public IEnumerable<T> Read<T>(int sheetIndex)
-        {
-            if (Sheets.Count - 1 < sheetIndex)
-            {
-                throw new ArgumentOutOfRangeException(nameof(sheetIndex));
-            }
-
-            var sheet = Sheets[sheetIndex];
-            return ReadSheet<T>(sheet); 
-        }
-
-        public IEnumerable<T> ReadSheet<T>(ISheet sheet)
-        {
             //对应Excel表格中的属性信息
             PropertyInfo[] properties = null;
             IRow row;
             bool isFirstRow = true;
 
-            IEnumerator rows = sheet.GetRowEnumerator();
+            IEnumerator rows = Sheet.GetRowEnumerator();
             while (rows.MoveNext())
             {
                 row = (IRow)rows.Current;
