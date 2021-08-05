@@ -1,4 +1,5 @@
 ﻿using NPOI.HSSF.UserModel;
+using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System;
@@ -21,7 +22,8 @@ namespace NPOIHelper
         public static IEnumerable<T> ReadExcel<T>(string excelFileName, int sheetIndex = 0, int columnLength = 11)
         {
             var type = NPOITypeUtils.GetType(excelFileName);
-            return new ExcelReader(excelFileName, type).ReadSheet<T>(sheetIndex, columnLength);
+            using var reader = new ExcelReader(excelFileName, type);
+            return reader.ReadSheet<T>(sheetIndex, columnLength);
         }
 
         /// <summary>
@@ -35,7 +37,8 @@ namespace NPOIHelper
         public static IEnumerable<T> ReadExcel<T>(Stream stream, string contentType, int sheetIndex = 0, int columnLength = 11)
         {
             var type = NPOITypeUtils.GetTypeByContentType(contentType);
-            return new ExcelReader(stream, type).ReadSheet<T>(sheetIndex, columnLength);
+            using var reader = new ExcelReader(stream, type);
+            return reader.ReadSheet<T>(sheetIndex, columnLength);
         }
 
 
@@ -48,7 +51,8 @@ namespace NPOIHelper
         public static DataTable ReadExcel(string excelFileName, int sheetIndex = 0, int columnLength = 11)
         {
             var type = NPOITypeUtils.GetType(excelFileName);
-            return new ExcelReader(excelFileName, type).ReadSheet(sheetIndex, columnLength);
+            using var reader = new ExcelReader(excelFileName, type);
+            return reader.ReadSheet(sheetIndex, columnLength);
         }
 
 
@@ -63,7 +67,8 @@ namespace NPOIHelper
         public static DataTable ReadExcel(Stream stream, string contentType, int sheetIndex = 0, int columnLength = 11)
         {
             var type = NPOITypeUtils.GetTypeByContentType(contentType);
-            return new ExcelReader(stream, type).ReadSheet(sheetIndex, columnLength);
+            using var reader = new ExcelReader(stream, type);
+            return reader.ReadSheet(sheetIndex, columnLength);
         }
 
     }

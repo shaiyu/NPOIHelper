@@ -1,5 +1,6 @@
 ﻿using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
+using NPOI.Util;
 using NPOI.XSSF.UserModel;
 using System;
 using System.Collections;
@@ -11,12 +12,14 @@ using System.Reflection;
 
 namespace NPOIHelper
 {
-    public class ExcelReader
+    public class ExcelReader : IDisposable
     {
+        private bool disposedValue;
+
         /// <summary>
         /// 当前工作簿
         /// </summary>
-        public IWorkbook Workbook { get; }
+        public IWorkbook Workbook { get; private set; }
         /// <summary>
         /// Excel类型 xls/xlsx
         /// </summary>
@@ -56,18 +59,18 @@ namespace NPOIHelper
             }
         }
 
-        private IWorkbook ReadFile(Stream stram)
+        private IWorkbook ReadFile(Stream stream)
         {
             IWorkbook workbook;
             //初始化信息
             if (Type == NPOIType.xlsx)
             {
                 //workbook = new XSSFWorkbook(fileName);
-                workbook = new XSSFWorkbook(stram);
+                workbook = new XSSFWorkbook(stream);
             }
             else
             {
-                workbook = new HSSFWorkbook(stram);
+                workbook = new HSSFWorkbook(stream);
             }
             return workbook;
         }
@@ -103,6 +106,45 @@ namespace NPOIHelper
         public ISheet GetSheet(int sheetIndex)
         {
             return Workbook.GetSheetAt(sheetIndex);
+        }
+
+        public void Close()
+        {
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: dispose managed state (managed objects)+
+
+                    if (Workbook != null)
+                    {
+                        Workbook.Close();
+                    }
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                // TODO: set large fields to null
+                Workbook = null;
+                disposedValue = true;
+            }
+        }
+
+        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+        // ~ExcelReader()
+        // {
+        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        //     Dispose(disposing: false);
+        // }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }
