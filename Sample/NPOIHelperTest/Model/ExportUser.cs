@@ -18,7 +18,7 @@ namespace NPOIHelperTest
         [ColumnType(Name = "姓名")]
         public string Name { get; set; }
 
-        [ColumnType(Name = "年龄", Type = ColumnType.Number)]
+        [ColumnType(Name = "年龄", Type = ColumnType.Number, IsZeroFillEmpty = true)]
         public int Age { get; set; }
 
         [ColumnType(Name = "手机号码")]

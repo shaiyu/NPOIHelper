@@ -88,7 +88,10 @@ namespace NPOIHelper
                     {
                         titleName = attr.Name == null ? p.Name : attr.Name;
                         type = attr.Type;
-                        columnList.Add(new Column(p.Name, titleName, type));
+                        columnList.Add(new Column(p.Name, titleName, type)
+                        {
+                            IsZeroFillEmpty = attr.IsZeroFillEmpty
+                        });
                     }
                 }
                 this.Columns = columnList.ToArray();

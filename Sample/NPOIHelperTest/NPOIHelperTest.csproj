@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NPOIHelper\NPOIHelper.csproj" />
+    <ProjectReference Include="..\..\NPOIHelper\NPOIHelper.csproj" />
   </ItemGroup>
 
   <ItemGroup>

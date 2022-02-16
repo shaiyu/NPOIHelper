@@ -1,6 +1,7 @@
 ﻿using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,6 +55,11 @@ namespace NPOIHelper
         /// </summary>
         public bool IsFormula { get; set; }
 
+        /// <summary>
+        /// 对数值类型, 0 处理为空
+        /// </summary>
+        public bool IsZeroFillEmpty { get; set; }
+
         private Column() { }
 
         /// <summary>
@@ -94,7 +100,8 @@ namespace NPOIHelper
         public Column(string colName, string colTitleName, ColumnType colType, Func<object, string> func)
             : this(colName, colTitleName, colType)
         {
-            this.Func = (t, index) => {
+            this.Func = (t, index) =>
+            {
                 return func.Invoke(t);
             };
         }
@@ -150,13 +157,32 @@ namespace NPOIHelper
             }
             //设置公式
             //值是公式 则使用公式
-            if (IsFormula)
+            if (IsFormula && colsValue != null)
             {
-               //cell.SetCellFormula(colsValue);
-               cell.SetCellFormula(string.Format(colsValue, rowIndex));
+                try
+                {
+                    //cell.SetCellFormula(colsValue);
+                    cell.SetCellFormula(string.Format(colsValue, rowIndex));
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("设置公式错误,message={0}", ex.Message);
+                }
             }
+
+            if (IsZeroFillEmpty && IsNumberType()
+                && double.TryParse(colsValue, out double _value) && _value == 0)
+            {
+                colsValue = string.Empty;
+            }
+
             //return colsValue;
         }
 
+        public bool IsNumberType()
+        {
+            int colTypeValue = (int)ColType;
+            return colTypeValue > 0 && colTypeValue < 10;
+        }
     }
 }

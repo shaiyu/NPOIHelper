@@ -18,9 +18,22 @@ namespace NPOIHelper
         /// </summary>
         public ColumnTypeAttribute()
         {
-            this.Hide = false; 
-            this.Type = ColumnType.Default;
+            Hide = false; 
+            Type = ColumnType.Default;
         }
+
+        public ColumnTypeAttribute(string name) : this()
+        {
+            Name = name;
+        }
+
+        public ColumnTypeAttribute(string name, ColumnType type) : this(name)
+        {
+            Name = name;
+            Type = type;
+        }
+
+
 
         /// <summary>
         /// 导出名称
@@ -35,5 +48,9 @@ namespace NPOIHelper
         /// </summary>
         public bool Hide { get; set; }
 
+        /// <summary>
+        /// 对数值类型, 0 处理为空
+        /// </summary>
+        public bool IsZeroFillEmpty { get; set; }
     }
 }

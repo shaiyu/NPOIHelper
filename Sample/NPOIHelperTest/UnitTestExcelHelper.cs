@@ -26,6 +26,9 @@ namespace NPOIHelperTest
         {
             var list = DataMakerHelper.Makes<ExportUser>(100).ToList();
 
+            list[0].Age = 0;
+            list[3].Age = 0;
+            list[5].Age = 0;
 
             IExcelHelper helper = NPOIHelperBuild.GetHelper();
             helper.Add("sheet1", list);
